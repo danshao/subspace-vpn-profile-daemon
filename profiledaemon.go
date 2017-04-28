@@ -26,7 +26,7 @@ const (
 
 const (
 	// Name of the service
-	name        = "vpnuser"
+	name        = "vpnprofile"
 	description = "Snapshot VPN user historical data"
 )
 
