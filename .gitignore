@@ -1,0 +1,5 @@
+# Gogland
+.idea/**/libraries
+.idea/**/workspace.xml
+modules.xml
+*.iml
