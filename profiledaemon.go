@@ -17,9 +17,9 @@ const (
 	SOFTETHER_ENDPOINT = "localhost"
 	SOFTETHER_PASSWORD = "subspace"
 	HUB                = "subspace"
-	
+
 	MYSQL_ENDPOINT = "localhost"
-	MYSQL_ACCOUNT = "subspace"
+	MYSQL_ACCOUNT  = "subspace"
 	MYSQL_PASSWORD = "subspace"
 	MYSQL_DATABASE = "subspace"
 )
@@ -72,15 +72,23 @@ func (service *Service) Manage() (string, error) {
 		Password: SOFTETHER_PASSWORD,
 		Hub:      HUB,
 	}
-	repo := repository.MysqlProfileRepository{
-		Host: MYSQL_ENDPOINT,
-		Account: MYSQL_ACCOUNT,
-		Password: MYSQL_PASSWORD,
+	profileSnapshotRepo := repository.MysqlProfileSnapshotRepository{
+		Host:         MYSQL_ENDPOINT,
+		Account:      MYSQL_ACCOUNT,
+		Password:     MYSQL_PASSWORD,
 		DatabaseName: MYSQL_DATABASE,
 	}
+	profileRepo := repository.MysqlProfileRepository{
+		Host:         MYSQL_ENDPOINT,
+		Account:      MYSQL_ACCOUNT,
+		Password:     MYSQL_PASSWORD,
+		DatabaseName: MYSQL_DATABASE,
+	}
+
 	runner := ProfileDaemonRunner{
-		Server:            vpnServer,
-		ProfileRepository: repo,
+		Server:                    vpnServer,
+		ProfileSnapshotRepository: profileSnapshotRepo,
+		ProfileRepository:         profileRepo,
 	}
 	runner.Start()
 

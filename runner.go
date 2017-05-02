@@ -11,8 +11,9 @@ import (
 )
 
 type ProfileDaemonRunner struct {
-	Server            softether.SoftEther
-	ProfileRepository repository.MysqlProfileRepository
+	Server                    softether.SoftEther
+	ProfileSnapshotRepository repository.MysqlProfileSnapshotRepository
+	ProfileRepository         repository.MysqlProfileRepository
 }
 
 const INTERVAL = 2 * time.Second
@@ -53,7 +54,10 @@ func (daemon ProfileDaemonRunner) Start() {
 				}
 			}
 
-			if err := daemon.ProfileRepository.InsertBatch(profileSnapshots); nil != err {
+			if err := daemon.ProfileSnapshotRepository.InsertBatch(profileSnapshots); nil != err {
+				fmt.Println(err)
+			}
+			if err := daemon.ProfileRepository.UpdateBatch(profileSnapshots); nil != err {
 				fmt.Println(err)
 			}
 		}
