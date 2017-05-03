@@ -37,14 +37,24 @@ func (daemon ProfileDaemonRunner) Start() {
 				continue
 			}
 
+			profileBriefs := make([]*model.SoftEtherUserBrief, 0)
+			for _, rawData := range userList {
+				if profileBrief, err := utils.ParseUserList(daemon.Server.Hub, rawData); nil == err {
+					profileBriefs = append(profileBriefs, profileBrief)
+				} else {
+					fmt.Println(t, "UserList format is not expected")
+				}
+			}
+
 			fmt.Println("User List Start")
 			profileSnapshots := make([]*model.ProfileSnapshot, 0)
-			for _, rawData := range userList {
-				userName := rawData["User Name"]
+			for _, brief := range profileBriefs {
+				fmt.Println("User Get ", brief.UserName)
 
-				fmt.Println("User Get ", userName)
-				if userDetail, code := daemon.Server.GetUserInfo(userName); 0 == code {
+				if userDetail, code := daemon.Server.GetUserInfo(brief.UserName); 0 == code {
 					if profile, err := utils.ParseUserGet(daemon.Server.Hub, userDetail); nil == err {
+						//由於 UserGet 沒有 Last Login 資料，因此需要整合 UserList 拿到的資料
+						profile.MergeSoftEtherUserBrief(brief)
 						profileSnapshots = append(profileSnapshots, profile)
 					} else {
 						fmt.Println(t, "UserGet format is not expected")
