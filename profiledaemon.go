@@ -9,8 +9,8 @@ import (
 
 	"github.com/takama/daemon"
 
-	"gitlab.ecoworkinc.com/subspace/softetherlib/softether"
-	"gitlab.ecoworkinc.com/subspace/subspace-utility/subspace/repository"
+	"gitlab.ecoworkinc.com/Subspace/softetherlib/softether"
+	"gitlab.ecoworkinc.com/Subspace/subspace-utility/subspace/repository"
 )
 
 const (
