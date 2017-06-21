@@ -11,8 +11,8 @@ import (
 
 type ProfileDaemonRunner struct {
 	Server                    softether.SoftEther
-	ProfileSnapshotRepository repository.MysqlProfileSnapshotRepository
-	ProfileRepository         repository.MysqlProfileRepository
+	ProfileSnapshotRepository repository.ProfileSnapshotRepository
+	ProfileRepository         repository.ProfileRepository
 }
 
 const INTERVAL = 2 * time.Second
