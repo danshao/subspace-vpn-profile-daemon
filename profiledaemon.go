@@ -72,18 +72,9 @@ func (service *Service) Manage() (string, error) {
 		Password: SOFTETHER_PASSWORD,
 		Hub:      HUB,
 	}
-	profileSnapshotRepo := repository.MysqlProfileSnapshotRepository{
-		Host:         MYSQL_ENDPOINT,
-		Account:      MYSQL_ACCOUNT,
-		Password:     MYSQL_PASSWORD,
-		DatabaseName: MYSQL_DATABASE,
-	}
-	profileRepo := repository.MysqlProfileRepository{
-		Host:         MYSQL_ENDPOINT,
-		Account:      MYSQL_ACCOUNT,
-		Password:     MYSQL_PASSWORD,
-		DatabaseName: MYSQL_DATABASE,
-	}
+
+	profileSnapshotRepo := repository.InitProfileSnapshotRepositoryWithHost(MYSQL_ENDPOINT)
+	profileRepo := repository.InitProfileRepositoryWithHost(MYSQL_ENDPOINT)
 
 	runner := ProfileDaemonRunner{
 		Server:                    vpnServer,
